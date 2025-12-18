@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<h2>Корзина / История удалений</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Фото</th>
+        <th>Удалено из</th>
+        <th>Дата удаления</th>
+        <th>Действие</th>
+    </tr>
+    {% for item in log %}
+    <tr>
+        <td>{{ item.filename }}</td>
+        <td>{{ item.original_path }}</td>
+        <td>{{ item.deleted_at }}</td>
+        <td>
+            <a href="/restore/{{ item.filename }}"><button>Восстановить</button></a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<a href="/"><button>Назад к фото</button></a>
+</body>
+</html>

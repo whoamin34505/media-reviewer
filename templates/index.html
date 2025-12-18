@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo reviewer</title>
+</head>
+<body>
+
+<h2>Оставить фото?</h2>
+
+<img src="/photo/{{ photo_path }}" width="600"><br><br>
+
+<a href="/keep/{{ photo_path }}">
+    <button>Оставить</button>
+</a>
+
+<a href="/delete/{{ photo_path }}">
+    <button>Удалить</button>
+</a>
+
+</body>
+</html>

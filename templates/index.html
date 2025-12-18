@@ -8,8 +8,11 @@
 <a href="/trash"><button>Корзина / История удалений</button></a>
 <br><br>
 
-<h2>Оставить фото?</h2>
+<h2>Photo reviewer</h2>
+<p>Оставшихся фото: {{ remaining_count }}</p>
+<p>Удалено фото: {{ deleted_count }}</p>
 
+<h3>Оставить фото?</h3>
 <img src="/photo/{{ photo_path }}" width="600"><br><br>
 
 <a href="/keep/{{ photo_path }}">
@@ -19,6 +22,7 @@
 <a href="/delete/{{ photo_path }}">
     <button>Удалить</button>
 </a>
+
 
 </body>
 </html>

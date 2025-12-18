@@ -45,11 +45,18 @@ def scan_photos():
 @app.route("/")
 def index():
     photos = scan_photos()
+    deleted_count = get_deleted_count()
+
     if not photos:
-        return "<h2>Фотографий больше нет</h2>"
+        return "<h2>Фотографий больше нет</h2> <br> <a href=\"/trash\"><button>Корзина / История удалений</button></a>"
 
     photo = random.choice(photos)
-    return render_template("index.html", photo_path=photo.name)
+    return render_template(
+        "index.html",
+        photo_path=photo.name,
+        remaining_count=len(photos),
+        deleted_count=deleted_count
+    )
 
 
 @app.route("/photo/<filename>")
@@ -105,6 +112,11 @@ def restore_photo(filename):
             log = [x for x in log if x["filename"] != filename]
             save_trash_log(log)
     return redirect(url_for("view_trash"))
+
+def get_deleted_count():
+    log = load_trash_log()
+    return len(log)
+
 
 
 if __name__ == "__main__":

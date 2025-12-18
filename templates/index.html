@@ -2,27 +2,187 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Photo reviewer</title>
+    <title>Photo Reviewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {box-sizing: border-box;}
+        body {
+            background: linear-gradient(180deg, #050a16 0%, #0a1628 50%, #0f1f3a 100%);
+            color: #f0f0f0;
+            font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h2, h3 {
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Кнопки */
+        button {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #f0f0f0;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 24px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .keep-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            border-color: #22c55e;
+            box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+        }
+
+        .keep-btn:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            box-shadow: 0 4px 16px rgba(239,68,68,0.3);
+        }
+
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 6px 20px rgba(239,68,68,0.4);
+        }
+
+        .trash-btn button {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #3b82f6;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+        }
+
+        .trash-btn button:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Изображение */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transition: transform 0.2s ease;
+        }
+
+        img:hover {
+            transform: scale(1.01);
+        }
+
+        /* Счётчики */
+        .counters {
+            text-align: center;
+            margin: 10px 0 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .counters p {
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            margin: 0;
+        }
+
+        /* Кнопка корзины */
+        .trash-btn {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Адаптация под мобилы */
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                padding: 16px;
+            }
+            button {
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 16px;
+            }
+            .counters {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<a href="/trash"><button>Корзина / История удалений</button></a>
-<br><br>
 
-<h2>Photo reviewer</h2>
-<p>Оставшихся фото: {{ remaining_count }}</p>
-<p>Удалено фото: {{ deleted_count }}</p>
+<div class="container">
+    <div class="trash-btn">
+        <a href="/trash"><button>Корзина / История удалений</button></a>
+    </div>
 
-<h3>Оставить фото?</h3>
-<img src="/photo/{{ photo_path }}" width="600"><br><br>
+    <h2>Photo Reviewer</h2>
 
-<a href="/keep/{{ photo_path }}">
-    <button>Оставить</button>
-</a>
+    <div class="counters">
+        <p>Оставшихся фото: {{ remaining_count }}</p>
+        <p>Удалено фото: {{ deleted_count }}</p>
+    </div>
 
-<a href="/delete/{{ photo_path }}">
-    <button>Удалить</button>
-</a>
+    <h3>Оставить фото?</h3>
+    <img src="/photo/{{ photo_path }}">
 
+    <div style="text-align:center;">
+        <a href="/keep/{{ photo_path }}"><button class="keep-btn">✅ Оставить</button></a>
+        <a href="/delete/{{ photo_path }}"><button class="delete-btn">❌ Удалить</button></a>
+    </div>
+</div>
 
 </body>
 </html>
